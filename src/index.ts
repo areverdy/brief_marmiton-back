@@ -23,7 +23,7 @@ const mySequelize = new Sequelize({
   storage: "./db.sqlite",
 })
 
-const recette = mySequelize.define("nouvellerecette", {
+const recette = mySequelize.define("recettes", {
   nom: {
     type: DataTypes.STRING,
   },
@@ -42,7 +42,7 @@ const recette = mySequelize.define("nouvellerecette", {
 
 
 app.post("/add/:nomrecette/:lienimage/:duree/:note", async (req, res) => {
-  recette.create({
+  await recette.create({
     nom : req.params.nomrecette, 
     lienimage :req.params.lienimage,
     duree : req.params.duree,
@@ -50,3 +50,6 @@ app.post("/add/:nomrecette/:lienimage/:duree/:note", async (req, res) => {
   })
   res.sendStatus(200);
 });
+
+// mySequelize.sync({force : true})
+mySequelize.sync()
