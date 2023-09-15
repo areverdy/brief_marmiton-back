@@ -1,6 +1,6 @@
 import express, { Request } from "express"
 import "dotenv/config"
-import { DataTypes, Model, Sequelize } from "sequelize"
+import { DataTypes, Model, Sequelize, where } from "sequelize"
 import cors from "cors"
 import bodyParser from "body-parser"
 
@@ -65,6 +65,30 @@ app.get("/marmitops", async (req, res) => {
   const recettes = await Recette.findAll()
   res.json(recettes)
 })
+
+app.get("/marmitops/:id", async (req, res) => {
+  console.log('ping reussi');
+  let achercher = req.params.id
+  const recettes = await Recette.findOne({
+    where: {
+      id: achercher
+    }
+  })
+  res.json(recettes)
+})
+
+app.delete("/marmitops/:id", async (req, res) => {
+  console.log('ping reussi');
+  let aDetruire = req.params.id
+  const recettes = await Recette.destroy({
+    where: {
+      id: aDetruire
+    }
+  })
+  res.json(recettes)
+})
+
+
 
 // app.post("/add/:nomrecette/:lienimage/:duree/:note", async (req, res) => {
   // await recette.create({
